@@ -1,0 +1,52 @@
+﻿<#@ template language="C#" debug="True" #>
+<#@ output extension="cs" #>
+<#@ Assembly Name="System.Core" #>
+<#@ Assembly Name="$(SolutionDir)\Component.Tools\bin\Debug\Component.Tools.dll" #>
+<#@ import namespace="System.IO" #>
+<#@ Import Namespace="System.Linq" #>
+<#@ Import Namespace="System.Text" #>
+<#@ import namespace="System.Reflection" #>
+<#@ Import Namespace="System.Collections.Generic" #>
+<#@ Import Namespace="Component.Tools" #>
+<#@ Import Namespace="Component.Tools.T4" #>
+<#@ include file="T4Toolbox.tt" #>
+<#@ include file="Include\IEntitySiteServiceTemplate.tt" #>
+<#@ include file="Include\EntitySiteServiceTemplate.tt" #>
+
+<#
+    string currentPath = Path.GetDirectoryName(Host.TemplateFile);
+    string projectPath =currentPath.Substring(0, currentPath.IndexOf(@"\T4"));
+    string solutionPath = currentPath.Substring(0, currentPath.IndexOf(@"\Site.Service"));
+
+    string modelFile= Path.Combine(solutionPath, @"Core.Models\bin\Debug\Core.Models.dll");
+    byte[] fileData= File.ReadAllBytes(modelFile);
+    Assembly assembly = Assembly.Load(fileData);
+    IEnumerable<Type> modelTypes = assembly.GetTypes();//.Where(m => typeof(Entity).IsAssignableFrom(m) && !m.IsAbstract);
+    string path = string.Empty;
+    foreach(Type modelType in modelTypes)
+    {
+        T4ModelInfo model = new T4ModelInfo(modelType,false);
+        //数据层接口
+        IEntitySiteServiceTemplate isv= new IEntitySiteServiceTemplate(model);
+        
+        //path = model.UseModuleDir
+            //? string.Format(@"{0}\{1}", projectPath, model.ModuleName)
+            //: string.Format(@"{0}", projectPath);
+        path = string.Format(@"{0}", projectPath);
+        isv.Output.Encoding = Encoding.UTF8;
+        isv.RenderToFile(Path.Combine(path, isv.FileName));
+        
+        //数据层实现
+        EntitySiteServiceTemplate sv= new EntitySiteServiceTemplate(model);
+       
+        //path = model.UseModuleDir
+            //? string.Format(@"{0}\{1}", projectPath, model.ModuleName)
+            //: string.Format(@"{0}", projectPath);
+        path = string.Format(@"{0}\Impl", projectPath);
+        sv.Output.Encoding = Encoding.UTF8;
+        sv.RenderToFile(Path.Combine(path, sv.FileName));
+    }
+
+	
+
+#>

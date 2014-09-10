@@ -1,0 +1,125 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{71E1A944-2F4B-4599-B1E1-8A02F44130C0}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Site.Service</RootNamespace>
+    <AssemblyName>Site.Service</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <SccProjectName>Svn</SccProjectName>
+    <SccLocalPath>Svn</SccLocalPath>
+    <SccAuxPath>Svn</SccAuxPath>
+    <SccProvider>SubversionScc</SccProvider>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.ComponentModel.Composition" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Web.Http, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>D:\工作项目\XieShouWang\XieShouWang\XieShouWang.School.Sharon\packages\Microsoft.AspNet.WebApi.Core.4.0.20710.0\lib\net40\System.Web.Http.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Mvc, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\..\Program Files (x86)\Microsoft ASP.NET\ASP.NET MVC 4\Assemblies\System.Web.Mvc.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Helper\Ioc\MefDependencySolver.cs" />
+    <Compile Include="Impl\ReportsSiteService.cs" />
+    <Compile Include="Impl\Sys_FunctionsSiteService.cs" />
+    <Compile Include="Impl\Sys_MenuSiteService.cs" />
+    <Compile Include="Impl\TestDataSiteService.cs" />
+    <Compile Include="IReportsSiteContract.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="ISys_FunctionsSiteContract.cs" />
+    <Compile Include="ISys_MenuSiteContract.cs" />
+    <Compile Include="ITestDataSiteContract.cs" />
+    <Compile Include="T4\EntityCodeScript1.cs">
+      <DependentUpon>EntityCodeScript.tt</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Component.Data\Component.Data.csproj">
+      <Project>{2be6c9f8-2795-4008-a76d-4cb078dd6751}</Project>
+      <Name>Component.Data</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Core.Models\Core.Models.csproj">
+      <Project>{06e5e3df-a894-4291-8fc3-1d27fff50aa5}</Project>
+      <Name>Core.Models</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Core.Service\Core.Service.csproj">
+      <Project>{44000e72-4dc8-4b6a-b870-0f2848a80a63}</Project>
+      <Name>Core.Service</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Site.Models\Site.Models.csproj">
+      <Project>{8badcd85-5565-42d0-a584-339a48c65b74}</Project>
+      <Name>Site.Models</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="T4\EntityCodeScript.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>EntityCodeScript1.cs</LastGenOutput>
+      <LastOutputs>
+..\Impl\ReportsSiteService.cs
+..\Impl\Sys_FunctionsSiteService.cs
+..\Impl\Sys_MenuSiteService.cs
+..\Impl\TestDataSiteService.cs
+..\IReportsSiteContract.cs
+..\ISys_FunctionsSiteContract.cs
+..\ISys_MenuSiteContract.cs
+..\ITestDataSiteContract.cs
+.\EntityCodeScript1.cs
+</LastOutputs>
+    </None>
+    <None Include="T4\Include\CoreServiceBaseTemplate.tt" />
+    <None Include="T4\Include\EntitySiteServiceTemplate.tt" />
+    <None Include="T4\Include\IEntitySiteServiceTemplate.tt" />
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Properties\" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

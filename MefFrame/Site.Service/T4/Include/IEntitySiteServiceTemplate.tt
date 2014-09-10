@@ -1,0 +1,48 @@
+﻿<#+
+public class IEntitySiteServiceTemplate : CSharpTemplate
+{
+    private T4ModelInfo _model;
+        
+    public IEntitySiteServiceTemplate(T4ModelInfo model)
+    {
+        _model = model;
+    }
+    /// <summary>
+    /// 获取 生成的文件名，根据模型名定义
+    /// </summary>
+    public string FileName
+    {
+        get
+        {
+            return string.Format("I{0}SiteContract.cs", _model.Name);
+        }
+    }
+
+    public override string TransformText()
+    {
+#>
+//------------------------------------------------------------------------------
+//Copyright ©车易拍-公共服务组团队. All Rights Reserved.
+//------------------------------------------------------------------------------
+using Core.Models<#= _model.UseModuleDir ? "." + _model.ModuleName : "" #>;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using Core.Service;
+
+namespace Site.Service
+{
+    /// <summary>
+    /// ——<#= _model.Name #>核心业务契约
+    /// </summary>    
+    public interface I<#= _model.Name #>SiteContract:I<#= _model.Name #>Contract
+    {
+       
+    }
+}
+<#+
+        return this.GenerationEnvironment.ToString();
+    }
+}
+#>

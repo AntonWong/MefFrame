@@ -1,0 +1,68 @@
+﻿@using System.Web.UI.WebControls
+@using Site.Models
+@model  List<Site.Models.MenuView>
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+    <head>
+        <meta name="viewport" content="width=device-width" />
+
+        <script type="text/javascript" src="~/js/jquery-1.4.1.min.js"> </script>
+        <script src="~/js/jquery.unobtrusive-ajax.min.js"> </script>
+        <script>
+            function GetResult(data) {
+                var msg = eval("(" + data.response + ")");
+                alert(msg.message);
+                if (msg.status > 0) location.href = "/Home/List";
+            }
+        </script>
+        <title>Index</title>
+    </head>
+    <body>
+        <div>
+            <!-- 添加方法一 两种都一样  -->
+            <!-- 
+                <form action="/home/Add" method="post">
+                    <input name="name" type="text"/>
+                    <button type="submit">添加</button>
+                </form>
+                -->
+            <!-- 添加方法二  -->
+           @* @using (Html.BeginForm("Add", "Home", FormMethod.Post))
+            {
+                <input type="hidden" name="id"/>
+                <input name="name" type="text"/>
+                <input type="submit" value="添加"  />
+            }*@
+       
+
+       
+            <a href="@Url.Content("~/home/edit")">新增</a>
+            <!-- 列表 -->
+            <table border="1">
+                <th>ID</th>
+                <th>Name</th>
+                <th>Operation</th>
+                <tbody>
+                    @foreach (MenuView item in Model)
+                    {
+                        <tr>
+                            <td>@item.Id</td>
+                            <td>@item.Name</td>
+                            <td>
+                                <!--Ajax 删除方法 -->                   
+                                @Ajax.ActionLink("删除", "Delete", new {id = item.Id}, new AjaxOptions {HttpMethod = "post", Confirm = "确定删除吗？", OnComplete = "GetResult"})
+                                | <a href=@Url.Content("~/home/edit/")@item.Id>修改</a>
+                            </td>
+                        </tr>
+                    }
+                
+                </tbody>
+            </table>
+        </div>
+    </body>
+</html>

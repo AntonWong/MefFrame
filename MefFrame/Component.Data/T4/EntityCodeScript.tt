@@ -1,0 +1,32 @@
+﻿<#@ template language="C#" debug="True" #>
+<#@ output extension="cs" #>
+<#@ Assembly Name="System.Core" #>
+<#@ Assembly Name="$(SolutionDir)\Component.Tools\bin\Debug\Component.Tools.dll" #>
+<#@ import namespace="System.IO" #>
+<#@ Import Namespace="System.Linq" #>
+<#@ Import Namespace="System.Text" #>
+<#@ import namespace="System.Reflection" #>
+<#@ Import Namespace="System.Collections.Generic" #>
+<#@ Import Namespace="Component.Tools" #>
+<#@ Import Namespace="Component.Tools.T4" #>
+<#@ include file="T4Toolbox.tt" #>
+<#@ include file="Include\DbSetEntityTemplate.tt" #>
+
+<#
+    string currentPath = Path.GetDirectoryName(Host.TemplateFile);
+    string projectPath =currentPath.Substring(0, currentPath.IndexOf(@"\T4"));
+    string solutionPath = currentPath.Substring(0, currentPath.IndexOf(@"\Component.Data"));
+
+
+    string modelFile= Path.Combine(solutionPath, @"Core.Models\bin\Debug\Core.Models.dll");
+    byte[] fileData= File.ReadAllBytes(modelFile);
+    Assembly assembly = Assembly.Load(fileData);
+    IEnumerable<Type> modelTypes = assembly.GetTypes();//.Where(m => typeof(Entity).IsAssignableFrom(m) && !m.IsAbstract);
+        //实体映射类
+        DbSetEntityTemplate ds = new DbSetEntityTemplate(modelTypes);
+        var path =string.Format(@"{0}", projectPath);
+        ds.Output.Encoding = Encoding.UTF8;
+        ds.RenderToFile(Path.Combine(path, ds.FileName));
+        
+        
+#>

@@ -1,0 +1,284 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+	<!-- EF Runtime content -->
+	<edmx:Runtime>
+		<!-- SSDL content -->
+		<edmx:StorageModels>
+			<Schema Namespace="VehicleCheckDBModel.Store" Alias="Self" Provider="System.Data.SqlClient"
+			        ProviderManifestToken="2008"
+			        xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator"
+			        xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+				<EntityContainer Name="VehicleCheckDBModelStoreContainer">
+					<EntitySet Name="Reports" EntityType="VehicleCheckDBModel.Store.Reports" store:Type="Tables" Schema="dbo" />
+					<EntitySet Name="Sys_Functions" EntityType="VehicleCheckDBModel.Store.Sys_Functions" store:Type="Tables"
+					           Schema="dbo" />
+					<EntitySet Name="Sys_Menu" EntityType="VehicleCheckDBModel.Store.Sys_Menu" store:Type="Tables" Schema="dbo" />
+					<EntitySet Name="TestData" EntityType="VehicleCheckDBModel.Store.TestData" store:Type="Tables" Schema="dbo" />
+				</EntityContainer>
+				<EntityType Name="Reports">
+					<Key>
+						<PropertyRef Name="Id" />
+					</Key>
+					<Property Name="Id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+					<Property Name="CarId" Type="int" Nullable="false" />
+					<Property Name="InspectorId" Type="int" Nullable="false" />
+					<Property Name="TradeCode" Type="char" Nullable="false" MaxLength="15" />
+					<Property Name="PlateNumber" Type="nvarchar" Nullable="false" MaxLength="10" />
+					<Property Name="Country" Type="varchar" MaxLength="20" />
+					<Property Name="Brand" Type="varchar" MaxLength="50" />
+					<Property Name="Manufacturer" Type="varchar" MaxLength="50" />
+					<Property Name="Series" Type="varchar" MaxLength="50" />
+					<Property Name="Model" Type="varchar" MaxLength="100" />
+					<Property Name="Displacement" Type="decimal" Precision="4" Scale="1" />
+					<Property Name="Category" Type="varchar" MaxLength="10" />
+					<Property Name="DriveType" Type="varchar" MaxLength="10" />
+					<Property Name="Transmission" Type="varchar" MaxLength="10" />
+					<Property Name="Vin" Type="varchar" MaxLength="30" />
+					<Property Name="LicenseModel" Type="varchar" MaxLength="100" />
+					<Property Name="Mileage" Type="decimal" Precision="6" Scale="2" />
+					<Property Name="Engineserial" Type="varchar" MaxLength="50" />
+					<Property Name="VehicleType" Type="varchar" MaxLength="50" />
+					<Property Name="ExteriorColor" Type="varchar" MaxLength="10" />
+					<Property Name="RegDate" Type="datetime" />
+					<Property Name="BuildDate" Type="datetime" />
+					<Property Name="AccidentData" Type="varchar(max)" />
+					<Property Name="Score" Type="varchar" Nullable="false" MaxLength="50" />
+					<Property Name="Detail" Type="varchar(max)" />
+					<Property Name="Status" Type="tinyint" Nullable="false" />
+					<Property Name="CreateDate" Type="datetime" Nullable="false" />
+					<Property Name="DeleteFlag" Type="bit" />
+				</EntityType>
+				<EntityType Name="Sys_Functions">
+					<Key>
+						<PropertyRef Name="Id" />
+					</Key>
+					<Property Name="Id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+					<Property Name="FunName" Type="nvarchar" Nullable="false" MaxLength="50" />
+					<Property Name="FunDesc" Type="nvarchar" MaxLength="100" />
+					<Property Name="FunCode" Type="nvarchar" Nullable="false" MaxLength="50" />
+					<Property Name="ModuleId" Type="int" />
+					<Property Name="AllOperates" Type="nvarchar" MaxLength="50" />
+					<Property Name="DefaultOperates" Type="char" MaxLength="1" />
+					<Property Name="Status" Type="smallint" />
+				</EntityType>
+				<EntityType Name="Sys_Menu">
+					<Key>
+						<PropertyRef Name="Id" />
+					</Key>
+					<Property Name="Id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+					<Property Name="ParentId" Type="int" Nullable="false" />
+					<Property Name="ModuleId" Type="int" Nullable="false" />
+					<Property Name="FunId" Type="int" Nullable="false" />
+					<Property Name="MenuName" Type="nvarchar" Nullable="false" MaxLength="50" />
+					<Property Name="MenuDesc" Type="nvarchar" MaxLength="100" />
+					<Property Name="MenuImg" Type="nvarchar" MaxLength="50" />
+					<Property Name="LinkPage" Type="varchar" MaxLength="50" />
+					<Property Name="IsMainMenu" Type="bit" />
+					<Property Name="DisplayOrder" Type="smallint" />
+					<Property Name="Status" Type="smallint" />
+				</EntityType>
+				<EntityType Name="TestData">
+					<Key>
+						<PropertyRef Name="Id" />
+					</Key>
+					<Property Name="Id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+					<Property Name="Name" Type="varchar" MaxLength="50" />
+				</EntityType>
+			</Schema>
+		</edmx:StorageModels>
+		<!-- CSDL content -->
+		<edmx:ConceptualModels>
+			<Schema Namespace="VehicleCheckDBModel" Alias="Self" p1:UseStrongSpatialTypes="false"
+			        xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation"
+			        xmlns:p1="http://schemas.microsoft.com/ado/2009/02/edm/annotation"
+			        xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+				<EntityContainer Name="VehicleCheckDBEntities" p1:LazyLoadingEnabled="true">
+					<EntitySet Name="Sys_Functions" EntityType="VehicleCheckDBModel.Sys_Functions" />
+					<EntitySet Name="Sys_Menu" EntityType="VehicleCheckDBModel.Sys_Menu" />
+					<EntitySet Name="Reports" EntityType="VehicleCheckDBModel.Reports" />
+					<EntitySet Name="TestData" EntityType="VehicleCheckDBModel.TestData" />
+				</EntityContainer>
+				<EntityType Name="Sys_Functions">
+					<Key>
+						<PropertyRef Name="Id" />
+					</Key>
+					<Property Name="Id" Type="Int32" Nullable="false" p1:StoreGeneratedPattern="Identity" />
+					<Property Name="FunName" Type="String" Nullable="false" MaxLength="50" Unicode="true" FixedLength="false" />
+					<Property Name="FunDesc" Type="String" MaxLength="100" Unicode="true" FixedLength="false" />
+					<Property Name="FunCode" Type="String" Nullable="false" MaxLength="50" Unicode="true" FixedLength="false" />
+					<Property Name="ModuleId" Type="Int32" />
+					<Property Name="AllOperates" Type="String" MaxLength="50" Unicode="true" FixedLength="false" />
+					<Property Name="DefaultOperates" Type="String" MaxLength="1" Unicode="false" FixedLength="true" />
+					<Property Name="Status" Type="Int16" />
+				</EntityType>
+				<EntityType Name="Sys_Menu">
+					<Key>
+						<PropertyRef Name="Id" />
+					</Key>
+					<Property Name="Id" Type="Int32" Nullable="false" p1:StoreGeneratedPattern="Identity" />
+					<Property Name="ParentId" Type="Int32" Nullable="false" />
+					<Property Name="ModuleId" Type="Int32" Nullable="false" />
+					<Property Name="FunId" Type="Int32" Nullable="false" />
+					<Property Name="MenuName" Type="String" Nullable="false" MaxLength="50" Unicode="true" FixedLength="false" />
+					<Property Name="MenuDesc" Type="String" MaxLength="100" Unicode="true" FixedLength="false" />
+					<Property Name="MenuImg" Type="String" MaxLength="50" Unicode="true" FixedLength="false" />
+					<Property Name="LinkPage" Type="String" MaxLength="50" Unicode="false" FixedLength="false" />
+					<Property Name="IsMainMenu" Type="Boolean" />
+					<Property Name="DisplayOrder" Type="Int16" />
+					<Property Name="Status" Type="Int16" />
+				</EntityType>
+				<EntityType Name="Reports">
+					<Key>
+						<PropertyRef Name="Id" />
+					</Key>
+					<Property Type="Int32" Name="Id" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+					<Property Type="Int32" Name="CarId" Nullable="false" />
+					<Property Type="Int32" Name="InspectorId" Nullable="false" />
+					<Property Type="String" Name="TradeCode" Nullable="false" MaxLength="15" FixedLength="true" Unicode="false" />
+					<Property Type="String" Name="PlateNumber" Nullable="false" MaxLength="10" FixedLength="false" Unicode="true" />
+					<Property Type="String" Name="Country" MaxLength="20" FixedLength="false" Unicode="false" />
+					<Property Type="String" Name="Brand" MaxLength="50" FixedLength="false" Unicode="false" />
+					<Property Type="String" Name="Manufacturer" MaxLength="50" FixedLength="false" Unicode="false" />
+					<Property Type="String" Name="Series" MaxLength="50" FixedLength="false" Unicode="false" />
+					<Property Type="String" Name="Model" MaxLength="100" FixedLength="false" Unicode="false" />
+					<Property Type="Decimal" Name="Displacement" Precision="4" Scale="1" />
+					<Property Type="String" Name="Category" MaxLength="10" FixedLength="false" Unicode="false" />
+					<Property Type="String" Name="DriveType" MaxLength="10" FixedLength="false" Unicode="false" />
+					<Property Type="String" Name="Transmission" MaxLength="10" FixedLength="false" Unicode="false" />
+					<Property Type="String" Name="Vin" MaxLength="30" FixedLength="false" Unicode="false" />
+					<Property Type="String" Name="LicenseModel" MaxLength="100" FixedLength="false" Unicode="false" />
+					<Property Type="Decimal" Name="Mileage" Precision="6" Scale="2" />
+					<Property Type="String" Name="Engineserial" MaxLength="50" FixedLength="false" Unicode="false" />
+					<Property Type="String" Name="VehicleType" MaxLength="50" FixedLength="false" Unicode="false" />
+					<Property Type="String" Name="ExteriorColor" MaxLength="10" FixedLength="false" Unicode="false" />
+					<Property Type="DateTime" Name="RegDate" Precision="3" />
+					<Property Type="DateTime" Name="BuildDate" Precision="3" />
+					<Property Type="String" Name="AccidentData" MaxLength="Max" FixedLength="false" Unicode="false" />
+					<Property Type="String" Name="Score" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+					<Property Type="String" Name="Detail" MaxLength="Max" FixedLength="false" Unicode="false" />
+					<Property Type="Byte" Name="Status" Nullable="false" />
+					<Property Type="DateTime" Name="CreateDate" Nullable="false" Precision="3" />
+					<Property Type="Boolean" Name="DeleteFlag" />
+				</EntityType>
+				<EntityType Name="TestData">
+					<Key>
+						<PropertyRef Name="Id" />
+					</Key>
+					<Property Type="Int32" Name="Id" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+					<Property Type="String" Name="Name" MaxLength="50" FixedLength="false" Unicode="false" />
+				</EntityType>
+			</Schema>
+		</edmx:ConceptualModels>
+		<!-- C-S mapping content -->
+		<edmx:Mappings>
+			<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+				<EntityContainerMapping StorageEntityContainer="VehicleCheckDBModelStoreContainer"
+				                        CdmEntityContainer="VehicleCheckDBEntities">
+					<EntitySetMapping Name="Sys_Functions">
+						<EntityTypeMapping TypeName="VehicleCheckDBModel.Sys_Functions">
+							<MappingFragment StoreEntitySet="Sys_Functions">
+								<ScalarProperty Name="Id" ColumnName="Id" />
+								<ScalarProperty Name="FunName" ColumnName="FunName" />
+								<ScalarProperty Name="FunDesc" ColumnName="FunDesc" />
+								<ScalarProperty Name="FunCode" ColumnName="FunCode" />
+								<ScalarProperty Name="ModuleId" ColumnName="ModuleId" />
+								<ScalarProperty Name="AllOperates" ColumnName="AllOperates" />
+								<ScalarProperty Name="DefaultOperates" ColumnName="DefaultOperates" />
+								<ScalarProperty Name="Status" ColumnName="Status" />
+							</MappingFragment>
+						</EntityTypeMapping>
+					</EntitySetMapping>
+					<EntitySetMapping Name="Sys_Menu">
+						<EntityTypeMapping TypeName="VehicleCheckDBModel.Sys_Menu">
+							<MappingFragment StoreEntitySet="Sys_Menu">
+								<ScalarProperty Name="Id" ColumnName="Id" />
+								<ScalarProperty Name="ParentId" ColumnName="ParentId" />
+								<ScalarProperty Name="ModuleId" ColumnName="ModuleId" />
+								<ScalarProperty Name="FunId" ColumnName="FunId" />
+								<ScalarProperty Name="MenuName" ColumnName="MenuName" />
+								<ScalarProperty Name="MenuDesc" ColumnName="MenuDesc" />
+								<ScalarProperty Name="MenuImg" ColumnName="MenuImg" />
+								<ScalarProperty Name="LinkPage" ColumnName="LinkPage" />
+								<ScalarProperty Name="IsMainMenu" ColumnName="IsMainMenu" />
+								<ScalarProperty Name="DisplayOrder" ColumnName="DisplayOrder" />
+								<ScalarProperty Name="Status" ColumnName="Status" />
+							</MappingFragment>
+						</EntityTypeMapping>
+					</EntitySetMapping>
+					<EntitySetMapping Name="Reports">
+						<EntityTypeMapping TypeName="VehicleCheckDBModel.Reports">
+							<MappingFragment StoreEntitySet="Reports">
+								<ScalarProperty Name="DeleteFlag" ColumnName="DeleteFlag" />
+								<ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+								<ScalarProperty Name="Status" ColumnName="Status" />
+								<ScalarProperty Name="Detail" ColumnName="Detail" />
+								<ScalarProperty Name="Score" ColumnName="Score" />
+								<ScalarProperty Name="AccidentData" ColumnName="AccidentData" />
+								<ScalarProperty Name="BuildDate" ColumnName="BuildDate" />
+								<ScalarProperty Name="RegDate" ColumnName="RegDate" />
+								<ScalarProperty Name="ExteriorColor" ColumnName="ExteriorColor" />
+								<ScalarProperty Name="VehicleType" ColumnName="VehicleType" />
+								<ScalarProperty Name="Engineserial" ColumnName="Engineserial" />
+								<ScalarProperty Name="Mileage" ColumnName="Mileage" />
+								<ScalarProperty Name="LicenseModel" ColumnName="LicenseModel" />
+								<ScalarProperty Name="Vin" ColumnName="Vin" />
+								<ScalarProperty Name="Transmission" ColumnName="Transmission" />
+								<ScalarProperty Name="DriveType" ColumnName="DriveType" />
+								<ScalarProperty Name="Category" ColumnName="Category" />
+								<ScalarProperty Name="Displacement" ColumnName="Displacement" />
+								<ScalarProperty Name="Model" ColumnName="Model" />
+								<ScalarProperty Name="Series" ColumnName="Series" />
+								<ScalarProperty Name="Manufacturer" ColumnName="Manufacturer" />
+								<ScalarProperty Name="Brand" ColumnName="Brand" />
+								<ScalarProperty Name="Country" ColumnName="Country" />
+								<ScalarProperty Name="PlateNumber" ColumnName="PlateNumber" />
+								<ScalarProperty Name="TradeCode" ColumnName="TradeCode" />
+								<ScalarProperty Name="InspectorId" ColumnName="InspectorId" />
+								<ScalarProperty Name="CarId" ColumnName="CarId" />
+								<ScalarProperty Name="Id" ColumnName="Id" />
+							</MappingFragment>
+						</EntityTypeMapping>
+					</EntitySetMapping>
+					<EntitySetMapping Name="TestData">
+						<EntityTypeMapping TypeName="VehicleCheckDBModel.TestData">
+							<MappingFragment StoreEntitySet="TestData">
+								<ScalarProperty Name="Name" ColumnName="Name" />
+								<ScalarProperty Name="Id" ColumnName="Id" />
+							</MappingFragment>
+						</EntityTypeMapping>
+					</EntitySetMapping>
+				</EntityContainerMapping>
+			</Mapping>
+		</edmx:Mappings>
+	</edmx:Runtime>
+	<!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+	<Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+		<Connection>
+			<DesignerInfoPropertySet>
+				<DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+			</DesignerInfoPropertySet>
+		</Connection>
+		<Options>
+			<DesignerInfoPropertySet>
+				<DesignerProperty Name="ValidateOnBuild" Value="true" />
+				<DesignerProperty Name="EnablePluralization" Value="False" />
+				<DesignerProperty Name="IncludeForeignKeysInModel" Value="True" />
+				<DesignerProperty Name="CodeGenerationStrategy" Value="无" />
+			</DesignerInfoPropertySet>
+		</Options>
+		<!-- Diagram content (shape and connector positions) -->
+		<Diagrams>
+			<Diagram DiagramId="56d9a8b3c80f4040b5612dcd2f1556dd" Name="关系图1">
+				<EntityTypeShape EntityType="VehicleCheckDBModel.Sys_Functions" Width="1.5" PointX="0.75" PointY="0.75"
+				                 IsExpanded="true" />
+				<EntityTypeShape EntityType="VehicleCheckDBModel.Sys_Menu" Width="1.5" PointX="2.75" PointY="0.75"
+				                 IsExpanded="true" />
+				<EntityTypeShape EntityType="VehicleCheckDBModel.Reports" Width="1.5" PointX="0.24286910902842374"
+				                 PointY="12.480838721841964" />
+				<EntityTypeShape EntityType="VehicleCheckDBModel.TestData" Width="1.5" PointX="2.8102124737623209"
+				                 PointY="4.3260873576282" />
+			</Diagram>
+		</Diagrams>
+	</Designer>
+</edmx:Edmx>

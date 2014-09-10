@@ -1,0 +1,104 @@
+﻿<#+
+
+public class EntityServiceTemplate : CSharpTemplate
+{
+    private T4ModelInfo _model;
+        
+    public EntityServiceTemplate(T4ModelInfo model)
+    {
+        _model = model;
+    }
+    /// <summary>
+    /// 获取 生成的文件名，根据模型名定义
+    /// </summary>
+    public string FileName
+    {
+        get
+        { 
+            return string.Format("{0}Service.cs", _model.Name);
+        }
+    }
+
+    public override string TransformText()
+    {
+#>
+//------------------------------------------------------------------------------
+//Copyright ©车易拍-公共服务组团队. All Rights Reserved.
+//------------------------------------------------------------------------------
+using Core.Data.Repositories<#= _model.UseModuleDir ? "." + _model.ModuleName : "" #>;
+using System;
+using System.ComponentModel.Composition;
+using System.Linq;
+using System.Linq.Expressions;
+using Core.Models<#= _model.UseModuleDir ? "." + _model.ModuleName : "" #>;
+
+
+namespace Core.Service.Impl
+{
+    /// <summary>
+    /// ——<#= _model.Description #>
+    /// </summary>    
+    public class <#= _model.Name #>Service : CoreServiceBase, I<#= _model.Name #>Contract
+    {
+        #region 受保护属性 获取或设置数据访问对象
+
+        [Import]
+        protected I<#= _model.Name #>Repository <#= _model.Name #>Repository { get; set; }  
+ 
+        #endregion
+
+        #region 公共属性
+        /// <summary>
+        /// 数据对象
+        /// </summary>
+        public IQueryable<<#= _model.Name #>> <#= _model.Name #>s
+        {
+            get { return <#= _model.Name #>Repository.Entities; }
+        }
+
+        #endregion
+
+        #region 公共方法
+        /// <summary>
+        /// 添   加
+        /// </summary>
+        /// <param name="entity">实体</param>
+        /// <returns></returns>
+        public int Insert(<#= _model.Name #> entity)
+        {
+            return <#= _model.Name #>Repository.Insert(entity);
+        }
+        
+		/// <summary>
+        /// 删  除
+        /// </summary>
+        /// <param name="id"> ID主键 </param>
+		/// <param name="isSave">是否执行保存</param>
+        /// <returns> 操作影响的行数 </returns>
+        public int Delete(int id, bool isSave = false)
+        {
+            //<#= _model.Name #>Repository.DeleteEntity(isSave,new <#= _model.Name #>{Id=id});
+			return 0;
+        }
+
+        /// <summary>
+        /// 按需修改
+        /// </summary>
+        /// <param name="propertyExpression">需要修改的字段：.UpdateEntity<Member/>(m => new  {m.Password,m.ModifyDate}, member);</param>
+        /// <param name="entity">实体</param>
+        /// <param name="isSave"></param>
+        /// <returns></returns>
+        public int Update(Expression<Func<<#= _model.Name #>, object>> propertyExpression,<#= _model.Name #> entity,bool isSave=false)
+        {
+            return <#= _model.Name #>Repository.UpdateEntity(propertyExpression, isSave, entity);
+        }
+
+        #endregion
+       
+    }
+}
+<#+
+        return this.GenerationEnvironment.ToString();
+    }
+}
+#>

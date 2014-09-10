@@ -1,0 +1,42 @@
+﻿<#+
+public class CoreServiceBaseTemplate : CSharpTemplate
+{
+    /// <summary>
+    /// 获取 生成的文件名，根据模型名定义
+    /// </summary>
+    public string FileName
+    {
+        get
+        { 
+            return string.Format("CoreServiceBase.cs");
+        }
+    }
+	public override string TransformText()
+	{
+		base.TransformText();
+#>
+//------------------------------------------------------------------------------
+//Copyright ©车易拍-公共服务组团队. All Rights Reserved.
+//------------------------------------------------------------------------------
+using System.ComponentModel.Composition;
+using Component.Data;
+
+namespace Core.Service.Impl
+{
+	/// <summary>
+    ///     核心业务实现基类
+    /// </summary>
+    public abstract class CoreServiceBase
+    {
+        /// <summary>
+        ///     获取或设置 工作单元对象，用于处理同步业务的事务操作
+        /// </summary>
+        [Import]
+        protected IUnitOfWork UnitOfWork { get; set; }
+    }
+}
+<#+
+        return this.GenerationEnvironment.ToString();
+	}
+}
+#>

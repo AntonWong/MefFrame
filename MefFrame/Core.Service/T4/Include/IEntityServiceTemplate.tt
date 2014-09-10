@@ -1,0 +1,68 @@
+﻿<#+
+public class IEntityServiceTemplate : CSharpTemplate
+{
+    private T4ModelInfo _model;
+        
+    public IEntityServiceTemplate(T4ModelInfo model)
+    {
+        _model = model;
+    }
+    /// <summary>
+    /// 获取 生成的文件名，根据模型名定义
+    /// </summary>
+    public string FileName
+    {
+        get
+        { 
+            return string.Format("I{0}Contract.cs", _model.Name);
+        }
+    }
+
+    public override string TransformText()
+    {
+#>
+//------------------------------------------------------------------------------
+//Copyright ©车易拍-公共服务组团队. All Rights Reserved.
+//------------------------------------------------------------------------------
+using Core.Models<#= _model.UseModuleDir ? "." + _model.ModuleName : "" #>;
+using System;
+using System.Linq;
+using System.Linq.Expressions;
+
+namespace Core.Service
+{
+    /// <summary>
+    /// ——<#= _model.Description #>
+    /// </summary>    
+    public interface I<#= _model.Name #>Contract
+    {
+       
+        //查询数据集
+        IQueryable<<#= _model.Name #>> <#= _model.Name #>s { get; }
+        //添加
+        int Insert(<#= _model.Name #> entity);
+
+        /// <summary>
+        /// 删  除
+        /// </summary>
+        /// <param name="id"> ID主键 </param>
+        /// <param name="isSave">是否执行保存</param>
+        /// <returns> 操作影响的行数 </returns>
+        int Delete(int id, bool isSave = false);
+        
+		/// <summary>
+        /// 按需修改
+        /// </summary>
+        /// <param name="propertyExpression">需要修改的字段：.UpdateEntity<Member/>(m => new  {m.Password,m.ModifyDate}, member);</param>
+        /// <param name="entity">实体</param>
+        /// <param name="isSave"></param>
+        /// <returns></returns>
+        int Update(Expression<Func<<#= _model.Name #>, object>> propertyExpression,<#= _model.Name #> entity,bool isSave=false);
+   
+    }
+}
+<#+
+        return this.GenerationEnvironment.ToString();
+    }
+}
+#>

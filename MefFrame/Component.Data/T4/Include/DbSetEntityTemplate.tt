@@ -1,0 +1,45 @@
+﻿<#+
+
+public class DbSetEntityTemplate : CSharpTemplate
+{
+    private IEnumerable<Type> _modelTypes;
+    public DbSetEntityTemplate(IEnumerable<Type> modelTypes)
+    {
+            _modelTypes = modelTypes;
+    }
+    public string FileName
+    {
+        get
+        { 
+            return string.Format("DbSetEntity.cs");
+        }
+    }
+	public override string TransformText()
+	{
+		base.TransformText();
+#>
+
+using System.Data.Entity;
+
+namespace Component.Data
+{
+	public class DbSetEntity
+	{
+ <#+
+            foreach(Type modelType in _modelTypes)
+            {
+            T4ModelInfo model = new T4ModelInfo(modelType,false);
+ #>
+
+            public DbSet<Core.Models<#= model.UseModuleDir ? "." + model.ModuleName : "" #>.<#=model.Name #>> <#=model.Name #> { get; set; }
+<#+
+            }
+ #>
+		
+	}
+}
+<#+
+        return this.GenerationEnvironment.ToString();
+	}
+}
+#>
