@@ -5,88 +5,84 @@
 	<edmx:Runtime>
 		<!-- SSDL content -->
 		<edmx:StorageModels>
-			<Schema Namespace="VehicleCheckDBModel.Store" Alias="Self" Provider="System.Data.SqlClient"
-			        ProviderManifestToken="2008"
-			        xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator"
-			        xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
-				<EntityContainer Name="VehicleCheckDBModelStoreContainer">
-					<EntitySet Name="Reports" EntityType="VehicleCheckDBModel.Store.Reports" store:Type="Tables" Schema="dbo" />
-					<EntitySet Name="Sys_Functions" EntityType="VehicleCheckDBModel.Store.Sys_Functions" store:Type="Tables"
-					           Schema="dbo" />
-					<EntitySet Name="Sys_Menu" EntityType="VehicleCheckDBModel.Store.Sys_Menu" store:Type="Tables" Schema="dbo" />
-					<EntitySet Name="TestData" EntityType="VehicleCheckDBModel.Store.TestData" store:Type="Tables" Schema="dbo" />
-				</EntityContainer>
-				<EntityType Name="Reports">
-					<Key>
-						<PropertyRef Name="Id" />
-					</Key>
-					<Property Name="Id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
-					<Property Name="CarId" Type="int" Nullable="false" />
-					<Property Name="InspectorId" Type="int" Nullable="false" />
-					<Property Name="TradeCode" Type="char" Nullable="false" MaxLength="15" />
-					<Property Name="PlateNumber" Type="nvarchar" Nullable="false" MaxLength="10" />
-					<Property Name="Country" Type="varchar" MaxLength="20" />
-					<Property Name="Brand" Type="varchar" MaxLength="50" />
-					<Property Name="Manufacturer" Type="varchar" MaxLength="50" />
-					<Property Name="Series" Type="varchar" MaxLength="50" />
-					<Property Name="Model" Type="varchar" MaxLength="100" />
-					<Property Name="Displacement" Type="decimal" Precision="4" Scale="1" />
-					<Property Name="Category" Type="varchar" MaxLength="10" />
-					<Property Name="DriveType" Type="varchar" MaxLength="10" />
-					<Property Name="Transmission" Type="varchar" MaxLength="10" />
-					<Property Name="Vin" Type="varchar" MaxLength="30" />
-					<Property Name="LicenseModel" Type="varchar" MaxLength="100" />
-					<Property Name="Mileage" Type="decimal" Precision="6" Scale="2" />
-					<Property Name="Engineserial" Type="varchar" MaxLength="50" />
-					<Property Name="VehicleType" Type="varchar" MaxLength="50" />
-					<Property Name="ExteriorColor" Type="varchar" MaxLength="10" />
-					<Property Name="RegDate" Type="datetime" />
-					<Property Name="BuildDate" Type="datetime" />
-					<Property Name="AccidentData" Type="varchar(max)" />
-					<Property Name="Score" Type="varchar" Nullable="false" MaxLength="50" />
-					<Property Name="Detail" Type="varchar(max)" />
-					<Property Name="Status" Type="tinyint" Nullable="false" />
-					<Property Name="CreateDate" Type="datetime" Nullable="false" />
-					<Property Name="DeleteFlag" Type="bit" />
-				</EntityType>
-				<EntityType Name="Sys_Functions">
-					<Key>
-						<PropertyRef Name="Id" />
-					</Key>
-					<Property Name="Id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
-					<Property Name="FunName" Type="nvarchar" Nullable="false" MaxLength="50" />
-					<Property Name="FunDesc" Type="nvarchar" MaxLength="100" />
-					<Property Name="FunCode" Type="nvarchar" Nullable="false" MaxLength="50" />
-					<Property Name="ModuleId" Type="int" />
-					<Property Name="AllOperates" Type="nvarchar" MaxLength="50" />
-					<Property Name="DefaultOperates" Type="char" MaxLength="1" />
-					<Property Name="Status" Type="smallint" />
-				</EntityType>
-				<EntityType Name="Sys_Menu">
-					<Key>
-						<PropertyRef Name="Id" />
-					</Key>
-					<Property Name="Id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
-					<Property Name="ParentId" Type="int" Nullable="false" />
-					<Property Name="ModuleId" Type="int" Nullable="false" />
-					<Property Name="FunId" Type="int" Nullable="false" />
-					<Property Name="MenuName" Type="nvarchar" Nullable="false" MaxLength="50" />
-					<Property Name="MenuDesc" Type="nvarchar" MaxLength="100" />
-					<Property Name="MenuImg" Type="nvarchar" MaxLength="50" />
-					<Property Name="LinkPage" Type="varchar" MaxLength="50" />
-					<Property Name="IsMainMenu" Type="bit" />
-					<Property Name="DisplayOrder" Type="smallint" />
-					<Property Name="Status" Type="smallint" />
-				</EntityType>
-				<EntityType Name="TestData">
-					<Key>
-						<PropertyRef Name="Id" />
-					</Key>
-					<Property Name="Id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
-					<Property Name="Name" Type="varchar" MaxLength="50" />
-				</EntityType>
-			</Schema>
-		</edmx:StorageModels>
+		<Schema Namespace="VehicleCheckDBModel.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2008" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityContainer Name="VehicleCheckDBModelStoreContainer">
+          <EntitySet Name="Reports" EntityType="VehicleCheckDBModel.Store.Reports" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="Sys_Functions" EntityType="VehicleCheckDBModel.Store.Sys_Functions" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="Sys_Menu" EntityType="VehicleCheckDBModel.Store.Sys_Menu" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="TestData" EntityType="VehicleCheckDBModel.Store.TestData" store:Type="Tables" Schema="dbo" />
+        </EntityContainer>
+        <EntityType Name="Reports">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="CarId" Type="int" Nullable="false" />
+          <Property Name="InspectorId" Type="int" Nullable="false" />
+          <Property Name="TradeCode" Type="char" Nullable="false" MaxLength="15" />
+          <Property Name="PlateNumber" Type="nvarchar" Nullable="false" MaxLength="10" />
+          <Property Name="Country" Type="varchar" MaxLength="20" />
+          <Property Name="Brand" Type="varchar" MaxLength="50" />
+          <Property Name="Manufacturer" Type="varchar" MaxLength="50" />
+          <Property Name="Series" Type="varchar" MaxLength="50" />
+          <Property Name="Model" Type="varchar" MaxLength="100" />
+          <Property Name="Displacement" Type="decimal" Precision="4" Scale="1" />
+          <Property Name="Category" Type="varchar" MaxLength="10" />
+          <Property Name="DriveType" Type="varchar" MaxLength="10" />
+          <Property Name="Transmission" Type="varchar" MaxLength="10" />
+          <Property Name="Vin" Type="varchar" MaxLength="30" />
+          <Property Name="LicenseModel" Type="varchar" MaxLength="100" />
+          <Property Name="Mileage" Type="decimal" Precision="6" Scale="2" />
+          <Property Name="Engineserial" Type="varchar" MaxLength="50" />
+          <Property Name="VehicleType" Type="varchar" MaxLength="50" />
+          <Property Name="ExteriorColor" Type="varchar" MaxLength="10" />
+          <Property Name="RegDate" Type="datetime" />
+          <Property Name="BuildDate" Type="datetime" />
+          <Property Name="AccidentData" Type="varchar(max)" />
+          <Property Name="Score" Type="varchar" Nullable="false" MaxLength="50" />
+          <Property Name="Detail" Type="varchar(max)" />
+          <Property Name="Status" Type="tinyint" Nullable="false" />
+          <Property Name="CreateDate" Type="datetime" Nullable="false" />
+          <Property Name="DeleteFlag" Type="bit" />
+        </EntityType>
+        <EntityType Name="Sys_Functions">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="FunName" Type="nvarchar" Nullable="false" MaxLength="50" />
+          <Property Name="FunDesc" Type="nvarchar" MaxLength="100" />
+          <Property Name="FunCode" Type="nvarchar" Nullable="false" MaxLength="50" />
+          <Property Name="ModuleId" Type="int" />
+          <Property Name="AllOperates" Type="nvarchar" MaxLength="50" />
+          <Property Name="DefaultOperates" Type="char" MaxLength="1" />
+          <Property Name="Status" Type="smallint" />
+        </EntityType>
+        <EntityType Name="Sys_Menu">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="ParentId" Type="int" Nullable="false" />
+          <Property Name="ModuleId" Type="int" Nullable="false" />
+          <Property Name="FunId" Type="int" Nullable="false" />
+          <Property Name="MenuName" Type="nvarchar" Nullable="false" MaxLength="50" />
+          <Property Name="MenuDesc" Type="nvarchar" MaxLength="100" />
+          <Property Name="MenuImg" Type="nvarchar" MaxLength="50" />
+          <Property Name="LinkPage" Type="varchar" MaxLength="50" />
+          <Property Name="IsMainMenu" Type="bit" />
+          <Property Name="DisplayOrder" Type="smallint" />
+          <Property Name="Status" Type="smallint" />
+        </EntityType>
+        <EntityType Name="TestData">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="varchar" MaxLength="50" />
+          <Property Name="Description" Type="varchar" MaxLength="50" />
+        </EntityType>
+      </Schema></edmx:StorageModels>
 		<!-- CSDL content -->
 		<edmx:ConceptualModels>
 			<Schema Namespace="VehicleCheckDBModel" Alias="Self" p1:UseStrongSpatialTypes="false"
@@ -97,7 +93,7 @@
 					<EntitySet Name="Sys_Functions" EntityType="VehicleCheckDBModel.Sys_Functions" />
 					<EntitySet Name="Sys_Menu" EntityType="VehicleCheckDBModel.Sys_Menu" />
 					<EntitySet Name="Reports" EntityType="VehicleCheckDBModel.Reports" />
-					<EntitySet Name="TestData" EntityType="VehicleCheckDBModel.TestData" />
+          <EntitySet Name="TestData" EntityType="VehicleCheckDBModel.TestData" />
 				</EntityContainer>
 				<EntityType Name="Sys_Functions">
 					<Key>
@@ -161,13 +157,14 @@
 					<Property Type="DateTime" Name="CreateDate" Nullable="false" Precision="3" />
 					<Property Type="Boolean" Name="DeleteFlag" />
 				</EntityType>
-				<EntityType Name="TestData">
-					<Key>
-						<PropertyRef Name="Id" />
-					</Key>
-					<Property Type="Int32" Name="Id" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-					<Property Type="String" Name="Name" MaxLength="50" FixedLength="false" Unicode="false" />
-				</EntityType>
+        <EntityType Name="TestData">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Type="Int32" Name="Id" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="String" Name="Name" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="Description" MaxLength="50" FixedLength="false" Unicode="false" />
+        </EntityType>
 			</Schema>
 		</edmx:ConceptualModels>
 		<!-- C-S mapping content -->
@@ -240,14 +237,15 @@
 							</MappingFragment>
 						</EntityTypeMapping>
 					</EntitySetMapping>
-					<EntitySetMapping Name="TestData">
-						<EntityTypeMapping TypeName="VehicleCheckDBModel.TestData">
-							<MappingFragment StoreEntitySet="TestData">
-								<ScalarProperty Name="Name" ColumnName="Name" />
-								<ScalarProperty Name="Id" ColumnName="Id" />
-							</MappingFragment>
-						</EntityTypeMapping>
-					</EntitySetMapping>
+          <EntitySetMapping Name="TestData">
+            <EntityTypeMapping TypeName="VehicleCheckDBModel.TestData">
+              <MappingFragment StoreEntitySet="TestData">
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
 				</EntityContainerMapping>
 			</Mapping>
 		</edmx:Mappings>
@@ -276,8 +274,7 @@
 				                 IsExpanded="true" />
 				<EntityTypeShape EntityType="VehicleCheckDBModel.Reports" Width="1.5" PointX="0.24286910902842374"
 				                 PointY="12.480838721841964" />
-				<EntityTypeShape EntityType="VehicleCheckDBModel.TestData" Width="1.5" PointX="2.8102124737623209"
-				                 PointY="4.3260873576282" />
+        <EntityTypeShape EntityType="VehicleCheckDBModel.TestData" Width="1.5" PointX="1.875" PointY="5.125" />
 			</Diagram>
 		</Diagrams>
 	</Designer>
