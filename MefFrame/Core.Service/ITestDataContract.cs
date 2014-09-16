@@ -35,6 +35,8 @@ namespace Core.Service
         /// <param name="isSave"></param>
         /// <returns></returns>
         int Update(Expression<Func<TestData, object>> propertyExpression,TestData entity,bool isSave=false);
-   
+
+        int Update(Expression<Func<TestData, TestData>> propertyExpression, bool isSave = true);
+
     }
 }

@@ -14,6 +14,7 @@ namespace Core.Service.Impl
     /// <summary>
     /// ——TestData
     /// </summary>    
+    [Export(typeof(ITestDataContract))]
     public class TestDataService : CoreServiceBase, ITestDataContract
     {
         #region 受保护属性 获取或设置数据访问对象
@@ -67,6 +68,11 @@ namespace Core.Service.Impl
         public int Update(Expression<Func<TestData, object>> propertyExpression,TestData entity,bool isSave=false)
         {
             return TestDataRepository.UpdateEntity(propertyExpression, isSave, entity);
+        }
+
+        public int Update(Expression<Func<TestData, TestData>> propertyExpression, bool isSave = true)
+        {
+            return TestDataRepository.Update(propertyExpression, isSave);
         }
 
         #endregion
