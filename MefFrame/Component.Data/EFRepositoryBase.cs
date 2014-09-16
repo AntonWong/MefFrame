@@ -12,8 +12,7 @@ namespace Component.Data
     ///     EntityFramework仓储操作基类
     /// </summary>
     /// <typeparam name="TEntity">动态实体类型</typeparam>
-    public abstract class EFRepositoryBase<TEntity> : IRepository<TEntity> where TEntity : class
-    // : IRepository<TEntity> where TEntity : Entity
+    public abstract class EFRepositoryBase<TEntity> : IRepository<TEntity> where TEntity : class // : IRepository<TEntity> where TEntity : Entity
     {
         #region 属性
 
@@ -57,12 +56,20 @@ namespace Component.Data
         /// </summary>
         /// <param name="entity"> 实体对象 </param>
         /// <param name="isSave"> 是否执行保存 </param>
-        /// <returns> 操作影响的行数 </returns>
-        public virtual int Insert(TEntity entity, bool isSave = true)
+        /// <returns> entity </returns>
+        public int Insert(TEntity entity, bool isSave = true)
         {
             PublicHelper.CheckArgument(entity, "entity");
             EFContext.RegisterNew(entity);
             return isSave ? EFContext.Commit() : 0;
+        }
+
+        public TEntity InsertGetTEntity(TEntity entity, bool isSave = true)
+        {
+            PublicHelper.CheckArgument(entity, "entity");
+            EFContext.RegisterNew(entity);
+            if (isSave) EFContext.Commit();
+            return entity;
         }
 
         /// <summary>
@@ -75,45 +82,6 @@ namespace Component.Data
         {
             PublicHelper.CheckArgument(entities, "entities");
             EFContext.RegisterNew(entities);
-            return isSave ? EFContext.Commit() : 0;
-        }
-
-        /// <summary>
-        ///     删除指定编号的记录
-        /// </summary>
-        /// <param name="id"> 实体记录编号 </param>
-        /// <param name="isSave"> 是否执行保存 </param>
-        /// <returns> 操作影响的行数 </returns>
-        public virtual int Delete(object id, bool isSave = true)
-        {
-            PublicHelper.CheckArgument(id, "id");
-            TEntity entity = EFContext.Set<TEntity>().Find(id);
-            return entity != null ? Delete(entity, isSave) : 0;
-        }
-
-        /// <summary>
-        ///     删除实体记录
-        /// </summary>
-        /// <param name="entity"> 实体对象 </param>
-        /// <param name="isSave"> 是否执行保存 </param>
-        /// <returns> 操作影响的行数 </returns>
-        public virtual int Delete(TEntity entity, bool isSave = true)
-        {
-            PublicHelper.CheckArgument(entity, "entity");
-            EFContext.RegisterDeleted(entity);
-            return isSave ? EFContext.Commit() : 0;
-        }
-
-        /// <summary>
-        ///     删除实体记录集合
-        /// </summary>
-        /// <param name="entities"> 实体记录集合 </param>
-        /// <param name="isSave"> 是否执行保存 </param>
-        /// <returns> 操作影响的行数 </returns>
-        public virtual int Delete(IEnumerable<TEntity> entities, bool isSave = true)
-        {
-            PublicHelper.CheckArgument(entities, "entities");
-            EFContext.RegisterDeleted(entities);
             return isSave ? EFContext.Commit() : 0;
         }
 
@@ -137,6 +105,12 @@ namespace Component.Data
         {
            return Entities.Update(filterExpression, updateExpression);
         }
+
+        //public void UpdateEntity<TEntity1>(Expression<Func<TEntity1, TEntity1>> propertyExpression) where TEntity1 : class
+        //{
+        //    throw new NotImplementedException();
+        //}
+
         #endregion
 
         //Add At 2014年9月5日
@@ -157,6 +131,20 @@ namespace Component.Data
         }
 
         /// <summary>
+        /// 修改：example dbContext.UpdateEntity<Member/>(m => new Member{m.Id=1,m.Name="Jack"});
+        /// </summary>
+        /// <typeparam name="TEntity">实体表达式</typeparam>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="propertyExpression"></param>
+        /// <param name="isSave"></param>
+        public int Update<T>(Expression<Func<T, T>> propertyExpression, bool isSave = false) where T : class, new()
+        {
+            if (propertyExpression == null) throw new ArgumentNullException("propertyExpression");
+            EFContext.UpdateEntity(propertyExpression);
+            return isSave ? EFContext.Commit() : 0;
+        }
+
+        /// <summary>
         /// 根据主键ID删除实体
         /// 调用方法 例如：dbContext.DeleteEntity<Member/>(new Member { Id = 1 });
         /// CreateDate:2014年9月5日 17:17:51
@@ -169,6 +157,5 @@ namespace Component.Data
             EFContext.DeleteEntity(entities);
             return isSave ? EFContext.Commit() : 0;
         }
-
     }
 }

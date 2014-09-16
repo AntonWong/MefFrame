@@ -5,6 +5,8 @@ using System.Data.Entity;
 using System.Data.Entity.Infrastructure;
 using System.Linq.Expressions;
 using System.Reflection;
+using System.Linq;
+using Component.Tools;
 
 namespace Component.Data
 {
@@ -35,7 +37,6 @@ namespace Component.Data
             }
             try
             {
-
                 int result = Context.SaveChanges();
                 IsCommitted = true;
                 return result;
@@ -114,55 +115,6 @@ namespace Component.Data
                 Context.Configuration.AutoDetectChangesEnabled = true;
             }
         }
-
-        /// <summary>
-        ///     注册一个更改的对象到仓储上下文中
-        /// </summary>
-        /// <typeparam name="TEntity"> 要注册的类型 </typeparam>
-        /// <param name="entity"> 要注册的对象 </param>
-        public void RegisterModified<TEntity>(TEntity entity) where TEntity : class
-        {
-            if (Context.Entry(entity).State == EntityState.Detached)
-            {
-                Context.Set<TEntity>().Attach(entity);
-            }
-            Context.Entry(entity).State = EntityState.Modified;
-            IsCommitted = false;
-        }
-
-        /// <summary>
-        ///     注册一个删除的对象到仓储上下文中
-        /// </summary>
-        /// <typeparam name="TEntity"> 要注册的类型 </typeparam>
-        /// <param name="entity"> 要注册的对象 </param>
-        public void RegisterDeleted<TEntity>(TEntity entity) where TEntity : class
-        {
-            Context.Entry(entity).State = EntityState.Deleted;
-            IsCommitted = false;
-        }
-
-        /// <summary>
-        ///     批量注册多个删除的对象到仓储上下文中
-        /// </summary>
-        /// <typeparam name="TEntity"> 要注册的类型 </typeparam>
-        /// <param name="entities"> 要注册的对象集合 </param>
-        public void RegisterDeleted<TEntity>(IEnumerable<TEntity> entities) where TEntity : class
-        //where TEntity : Entity
-        {
-            try
-            {
-                Context.Configuration.AutoDetectChangesEnabled = false;
-                foreach (TEntity entity in entities)
-                {
-                    RegisterDeleted(entity);
-                }
-            }
-            finally
-            {
-                Context.Configuration.AutoDetectChangesEnabled = true;
-            }
-        }
-
         #region 按需修改实体
         /// <summary>
         /// 按需修改实体 调用方法 例如：dbContext.UpdateEntity<Member/>(m => new  {m.Password,m.AddDate}, member);
@@ -177,17 +129,51 @@ namespace Component.Data
              if (propertyExpression == null) throw new ArgumentNullException("propertyExpression");
             if (entities == null) throw new ArgumentNullException("entities");
             ReadOnlyCollection<MemberInfo> memberInfos = ((dynamic)propertyExpression.Body).Members;
-            foreach (TEntity entity in entities)
+            try
             {
+                foreach (TEntity entity in entities)
+                {
+                    DbEntityEntry<TEntity> entry = Context.Entry(entity);
+                    entry.State = EntityState.Unchanged;
+                    foreach (var memberInfo in memberInfos)
+                    {
+                        entry.Property(memberInfo.Name).IsModified = true;
+                    }
+                    Context.Configuration.ValidateOnSaveEnabled = false;
+                }
+                IsCommitted = false;
+            }
+            finally
+            {
+                Context.Configuration.AutoDetectChangesEnabled = true;
+            }
+           
+        }
+       
+        public void UpdateEntity<TEntity>(Expression<Func<TEntity, TEntity>> propertyExpression) where TEntity : class, new()
+        {
+            try
+            {
+                var memberInitExpression = propertyExpression.Body as MemberInitExpression;
+                var entity = EntityHelper.CopyPropertyValue(propertyExpression);
                 DbEntityEntry<TEntity> entry = Context.Entry(entity);
                 entry.State = EntityState.Unchanged;
-                foreach (var memberInfo in memberInfos)
-                {
-                    entry.Property(memberInfo.Name).IsModified = true;
-                }
+                if (memberInitExpression != null)
+                    foreach (var memberInfo in memberInitExpression.Bindings)
+                    {
+                        string propertyName = memberInfo.Member.Name;
+                        entry.Property(propertyName).IsModified = true;
+                    }
                 Context.Configuration.ValidateOnSaveEnabled = false;
+                IsCommitted = false;
             }
+            finally
+            {
+                Context.Configuration.AutoDetectChangesEnabled = true;
+            }
+
         }
+        
         #endregion
 
         #region 根据主键ID删除实体
@@ -200,11 +186,19 @@ namespace Component.Data
         /// <param name="entities"></param>
         public void DeleteEntity<TEntity>(params TEntity[] entities) where TEntity : class
         {
-            foreach (TEntity entity in entities)
+            try
             {
-                DbEntityEntry<TEntity> entry = Context.Entry(entity);
-                Context.Configuration.ValidateOnSaveEnabled = false;
-                entry.State = EntityState.Deleted;
+                foreach (TEntity entity in entities)
+                {
+                    DbEntityEntry<TEntity> entry = Context.Entry(entity);
+                    Context.Configuration.ValidateOnSaveEnabled = false;
+                    entry.State = EntityState.Deleted;
+                }
+                IsCommitted = false;
+            }
+            finally
+            {
+                Context.Configuration.AutoDetectChangesEnabled = true;
             }
         }
         #endregion
@@ -223,6 +217,20 @@ namespace Component.Data
             {
                 throw new Exception("数据删除时发生异常:" + ex.Message);
             }
+        }
+
+        public List<TEntity> SqlQuery<TEntity>(string queryCmdStr, object[] paras) where TEntity : class
+        {
+            try
+            {
+                return paras == null ? Context.Database.SqlQuery<TEntity>(queryCmdStr).ToList() : Context.Database.SqlQuery<TEntity>(queryCmdStr, paras).ToList();
+            }
+            catch (Exception error)
+            {
+
+                throw new Exception(error.Message);
+            }
+
         }
        
     }

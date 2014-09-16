@@ -28,7 +28,7 @@ namespace Component.Data
         /// <param name="entity"> 实体对象 </param>
         /// <param name="isSave"> 是否执行保存 </param>
         /// <returns> 操作影响的行数 </returns>
-        int Insert(TEntity entity, bool isSave = true);
+        TEntity InsertGetTEntity(TEntity entity, bool isSave = true);
 
         /// <summary>
         ///     批量插入实体记录集合
@@ -38,23 +38,7 @@ namespace Component.Data
         /// <returns> 操作影响的行数 </returns>
         int Insert(IEnumerable<TEntity> entities, bool isSave = true);
 
-     
-        /// <summary>
-        ///     删除实体记录
-        /// </summary>
-        /// <param name="entity"> 实体对象 </param>
-        /// <param name="isSave"> 是否执行保存 </param>
-        /// <returns> 操作影响的行数 </returns>
-        int Delete(TEntity entity, bool isSave = true);
-
-        /// <summary>
-        ///     删除实体记录集合
-        /// </summary>
-        /// <param name="entities"> 实体记录集合 </param>
-        /// <param name="isSave"> 是否执行保存 </param>
-        /// <returns> 操作影响的行数 </returns>
-        int Delete(IEnumerable<TEntity> entities, bool isSave = false);
-
+        int Insert(TEntity entities, bool isSave = true);
         /// <summary>
         ///     删除所有符合特定表达式的数据
         /// </summary>
@@ -70,6 +54,15 @@ namespace Component.Data
         /// <returns>操作影响的行数</returns>
         int Update(Expression<Func<TEntity, bool>> filterExpression, Expression<Func<TEntity, TEntity>> updateExpression);
 
+        /// <summary>
+        /// 修改：example dbContext.UpdateEntity<Member/>(m => new Member{m.Id=1,m.Name="Jack"});
+        /// </summary>
+        /// <typeparam name="TEntity">实体表达式</typeparam>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="propertyExpression"></param>
+        /// <param name="isSave"></param>
+        int Update<T>(Expression<Func<T, T>> propertyExpression, bool isSave = true) where T : class, new();
+        
         /// <summary>
         /// 按需修改实体 调用方法 例如：dbContext.UpdateEntity<Member/>(m => new  {m.Password,m.AddDate}, member);
         /// CreateDate:2014年9月5日 17:17:32
