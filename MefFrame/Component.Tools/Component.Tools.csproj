@@ -50,6 +50,7 @@
     <Compile Include="CombHelper.cs" />
     <Compile Include="ComponentException.cs" />
     <Compile Include="DataAccessException.cs" />
+    <Compile Include="EntityHelper.cs" />
     <Compile Include="ExceptionMessage.cs" />
     <Compile Include="Extensions\CollectionExtensions.cs" />
     <Compile Include="Extensions\EFExtensions.cs" />
