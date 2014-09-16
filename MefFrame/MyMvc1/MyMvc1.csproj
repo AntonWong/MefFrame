@@ -65,7 +65,9 @@
     <Reference Include="System.Web" />
     <Reference Include="System.Web.Extensions" />
     <Reference Include="System.Web.Abstractions" />
-    <Reference Include="System.Web.Routing" />
+    <Reference Include="System.Web.Routing">
+      <EmbedInteropTypes>False</EmbedInteropTypes>
+    </Reference>
     <Reference Include="System.Xml" />
     <Reference Include="System.Configuration" />
     <Reference Include="System.Web.Services" />
@@ -116,7 +118,6 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -139,9 +140,12 @@
     <Content Include="Web.Release.config">
       <DependentUpon>Web.config</DependentUpon>
     </Content>
-    <Content Include="Views\Web.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Controllers.Service\Controllers.Service.csproj">
+      <Project>{fe92a4ae-91cd-4d47-91b4-ee76fd732225}</Project>
+      <Name>Controllers.Service</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Core.Service\Core.Service.csproj">
       <Project>{44000e72-4dc8-4b6a-b870-0f2848a80a63}</Project>
       <Name>Core.Service</Name>
@@ -150,19 +154,25 @@
       <Project>{8badcd85-5565-42d0-a584-339a48c65b74}</Project>
       <Name>Site.Models</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Site.Service\Site.Service.csproj">
-      <Project>{71e1a944-2f4b-4599-b1e1-8a02f44130c0}</Project>
-      <Name>Site.Service</Name>
-    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Views\Home\List.cshtml" />
+    <Content Include="Areas\UserArea\Views\Web.config" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Views\Home\Edit.cshtml" />
+    <Folder Include="Areas\MemuModule\Views\Shared\" />
+    <Folder Include="Areas\UserArea\Views\Shared\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Areas\MemuModule\Views\Web.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Areas\MemuModule\Views\Home\List.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Areas\MemuModule\Views\Home\Edit.cshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
